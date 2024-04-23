@@ -5,7 +5,17 @@
 local M = {}
 
 M.ui = {
-	theme = "onedark",
+
+  theme = "ashes",
+  -- theme = "nightlamp"
+  --
+	-- theme = "onedark",
+	-- theme = "nord",
+  -- theme = "ayu_dark",
+  -- theme = "monekai",
+  -- theme = "nightowl",
+  -- theme = "nightfox",
+
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
