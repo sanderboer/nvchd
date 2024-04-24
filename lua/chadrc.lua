@@ -6,7 +6,7 @@ local M = {}
 
 M.ui = {
 
-  theme = "ashes",
+  theme = "mountain",
   -- theme = "nightlamp"
   --
 	-- theme = "onedark",
