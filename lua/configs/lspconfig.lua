@@ -12,7 +12,7 @@ for _, lsp in ipairs(servers) do
     on_attach = on_attach,
     on_init = on_init,
     capabilities = capabilities,
-  filetypes = {"html", "typescript"},
+  filetypes = {"html", "typescript","vue", "javascript"},
   }
 end
 
@@ -23,3 +23,8 @@ lspconfig.pyright.setup {
   capabilities = capabilities,
   filetypes = {"python"}
 }
+
+-- lspconfig.vuels.setup{
+--   cmd = { "vls" },
+--   filetypes = {"vue"}
+-- }
