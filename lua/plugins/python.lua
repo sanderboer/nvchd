@@ -1,4 +1,4 @@
-local plugins = {
+return {
   {
     "nvim-neotest/nvim-nio",
   },
@@ -47,24 +47,4 @@ local plugins = {
       return require "configs.null-ls"
     end,
   },
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "black",
-        "debugpy",
-        "mypy",
-        "ruff-lsp",
-        "pyright",
-      },
-    },
-  },
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-      require "configs.lspconfig"
-    end,
-  },
 }
-return plugins
