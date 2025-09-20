@@ -1,32 +1,34 @@
-return
+return {
   {
-  {
-  'NickvanDyke/opencode.nvim',
-  dependencies = {
-    -- Recommended for better prompt input, and required to use `opencode.nvim`'s embedded terminal — otherwise optional
-    { 'folke/snacks.nvim', opts = { input = { enabled = true } } },
+    "NickvanDyke/opencode.nvim",
+    dependencies = {
+      { "folke/snacks.nvim", opts = { input = { enabled = true } } },
+    },
+    lazy = false, -- ensure eager load so keymaps register immediately
+    config = function()
+      vim.g.opencode_opts = {}
+      vim.opt.autoread = true
+
+      local ok, oc = pcall(require, "opencode")
+      if not ok then
+        return
+      end
+
+      local function map(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, { desc = desc, silent = true })
+      end
+
+      map("n", "<leader>ot", function() oc.toggle() end, "Toggle opencode")
+      map("n", "<leader>oA", function() oc.ask() end, "Ask opencode")
+      map("n", "<leader>oa", function() oc.ask("@cursor: ") end, "Ask opencode about this")
+      map("v", "<leader>oa", function() oc.ask("@selection: ") end, "Ask opencode about selection")
+      map("n", "<leader>on", function() oc.command("session_new") end, "New opencode session")
+      map("n", "<leader>oy", function() oc.command("messages_copy") end, "Copy last opencode response")
+      -- NOTE: Many terminals do not distinguish <S-C-u>/<S-C-d>; <C-u>/<C-d> might be more portable
+      map("n", "<S-C-u>", function() oc.command("messages_half_page_up") end, "Messages half page up")
+      map("n", "<S-C-d>", function() oc.command("messages_half_page_down") end, "Messages half page down")
+      map({ "n", "v" }, "<leader>os", function() oc.select() end, "Select opencode prompt")
+      map("n", "<leader>oe", function() oc.prompt("Explain @cursor and its context") end, "Explain this code")
+    end,
   },
-  config = function()
-    vim.g.opencode_opts = {
-      -- Your configuration, if any — see `lua/opencode/config.lua`
-    }
-
-    -- Required for `opts.auto_reload`
-    vim.opt.autoread = true
-
-    -- Recommended keymaps
-    vim.keymap.set('n', '<leader>ot', function() require('opencode').toggle() end, { desc = 'Toggle opencode' })
-    vim.keymap.set('n', '<leader>oA', function() require('opencode').ask() end, { desc = 'Ask opencode' })
-    vim.keymap.set('n', '<leader>oa', function() require('opencode').ask('@cursor: ') end, { desc = 'Ask opencode about this' })
-    vim.keymap.set('v', '<leader>oa', function() require('opencode').ask('@selection: ') end, { desc = 'Ask opencode about selection' })
-    vim.keymap.set('n', '<leader>on', function() require('opencode').command('session_new') end, { desc = 'New opencode session' })
-    vim.keymap.set('n', '<leader>oy', function() require('opencode').command('messages_copy') end, { desc = 'Copy last opencode response' })
-    vim.keymap.set('n', '<S-C-u>',    function() require('opencode').command('messages_half_page_up') end, { desc = 'Messages half page up' })
-    vim.keymap.set('n', '<S-C-d>',    function() require('opencode').command('messages_half_page_down') end, { desc = 'Messages half page down' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>os', function() require('opencode').select() end, { desc = 'Select opencode prompt' })
-
-    -- Example: keymap for custom prompt
-    vim.keymap.set('n', '<leader>oe', function() require('opencode').prompt('Explain @cursor and its context') end, { desc = 'Explain this code' })
-  end,
 }
-  }
