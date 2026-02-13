@@ -17,12 +17,12 @@ end
 local servers = {
   html = {
     cmd = { "vscode-html-language-server", "--stdio" },
-    filetypes = { "html", "typescript", "vue", "javascript", "python" },
+    filetypes = { "html", "templ" },
     root_dir = mk_root { "package.json", ".git" },
   },
   cssls = {
     cmd = { "vscode-css-language-server", "--stdio" },
-    filetypes = { "html", "typescript", "vue", "javascript", "python" },
+    filetypes = { "css", "scss", "less" },
     root_dir = mk_root { "package.json", ".git" },
   },
   ts_lsp = { -- previously "ts_lsp" in config; custom name retained
