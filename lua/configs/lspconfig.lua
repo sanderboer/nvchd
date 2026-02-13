@@ -35,6 +35,18 @@ local servers = {
     filetypes = { "python" },
     root_dir = mk_root { "pyproject.toml", "setup.cfg", "setup.py", "requirements.txt", ".git" },
   },
+  omnisharp = {
+    -- Use the Roslyn/OmniSharp executable installed by mason (binary name may vary: omnisharp, omnisharp-mono, or omnisharp-roslyn)
+    cmd = { "omnisharp" },
+    filetypes = { "cs", "vb" }, -- C# and VB.NET
+    root_dir = mk_root { "*.sln", "*.csproj", "*.vbproj", ".git" },
+    extra = {
+      -- Example settings; tweak as needed.
+      enable_editorconfig_support = true,
+      enable_roslyn_analyzers = true,
+      organize_imports_on_format = true,
+    },
+  },
 }
 
 -- Build reverse index: filetype -> servers

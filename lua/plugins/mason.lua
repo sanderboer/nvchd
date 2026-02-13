@@ -9,6 +9,7 @@ return{
         "mypy",
         "ruff-lsp",
         "pyright",
+        "omnisharp", -- C#/VB.NET LSP
       },
     },
   },
