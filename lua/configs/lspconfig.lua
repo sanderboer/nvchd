@@ -9,7 +9,7 @@ local util = require "lspconfig.util"
 
 local function mk_root(patterns, fallback)
   return function(fname)
-    return util.root_pattern(unpack(patterns))(fname) or fallback or util.path.dirname(fname)
+    return util.root_pattern(unpack(patterns))(fname) or fallback or vim.fn.fnamemodify(fname, ":p:h:h")
   end
 end
 
@@ -60,8 +60,6 @@ end
 
 local group = vim.api.nvim_create_augroup("UserLspAutoStart", { clear = true })
 
-local make_config = vim.lsp.config or function(cfg) return cfg end -- fallback if older minor version
-
 local function start_server(name, spec, bufnr)
   if vim.fn.executable(spec.cmd[1]) == 0 then
     return -- silently skip if binary missing; mason can install later
@@ -75,7 +73,7 @@ local function start_server(name, spec, bufnr)
     capabilities = capabilities,
     filetypes = spec.filetypes,
   }, spec.extra or {})
-  vim.lsp.start(make_config(cfg))
+  vim.lsp.start(cfg)
 end
 
 vim.api.nvim_create_autocmd("FileType", {
